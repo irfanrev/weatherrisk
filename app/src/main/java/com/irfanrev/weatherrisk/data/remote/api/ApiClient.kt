@@ -1,16 +1,17 @@
 package com.irfanrev.weatherrisk.data.remote.api
 
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.irfanrev.weatherrisk.data.remote.model.WeatherModel
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-object ApiClient {
+interface ApiClient {
 
-    private fun getInstance() : Retrofit {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.weatherapi.com")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        return retrofit
-    }
+    @GET("/v1/current.json")
+    suspend fun getCurrentWeather(
+        @Query("key") apiKey: String,
+        @Query("q") city: String
+    ) : Response<WeatherModel>
 
 }
+
